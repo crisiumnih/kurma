@@ -1,7 +1,8 @@
-from adafruit_servokit import ServoKit
+from adiafruit_servokit import ServoKit
 import board
 import busio
 import time
+
 
 # Initialize servo controller
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -11,8 +12,8 @@ kit = ServoKit(channels=16, i2c=i2c, address=0x40)
 STAND = 165    # Default standing angle
 UP = 100       # Legs up position
 DOWN = 160      # Legs down position
-FWD = 30       # Forward position
-BACK = 90      # Back position
+FWD = 15       # Forward position
+BACK = 165      # Back position
 MID = 70       # Middle position
 
 
@@ -30,29 +31,29 @@ for i in range(8):
 
 def walking_state_1():
     # Vertical servos (0-3)
-    kit.servo[0].angle = DOWN
+    kit.servo[0].angle = DOWN+10
     kit.servo[1].angle = UP
-    kit.servo[2].angle = DOWN
+    kit.servo[2].angle = DOWN+10
     kit.servo[3].angle = UP
 
     # Horizontal servos (4-7)
     kit.servo[4].angle = FWD
     kit.servo[5].angle = BACK
-    kit.servo[6].angle = FWD
+    kit.servo[6].angle = FWD-10
     kit.servo[7].angle = BACK
 
 def walking_state_2():
     # Vertical servos
-    kit.servo[0].angle = DOWN
+    kit.servo[0].angle = DOWN+10
     kit.servo[1].angle = UP
-    kit.servo[2].angle = DOWN
+    kit.servo[2].angle = DOWN+10
     kit.servo[3].angle = UP
 
     # Horizontal servos
-    kit.servo[4].angle = BACK
-    kit.servo[5].angle = DOWN
-    kit.servo[6].angle = BACK
-    kit.servo[7].angle = DOWN
+    kit.servo[4].angle = FWD
+    kit.servo[5].angle = BACK
+    kit.servo[6].angle = FWD-10
+    kit.servo[7].angle = BACK
 
 def walking_state_3():
     # Vertical servos
@@ -62,10 +63,10 @@ def walking_state_3():
     kit.servo[3].angle = DOWN
 
     # Horizontal servos
-    kit.servo[4].angle = BACK
-    kit.servo[5].angle = DOWN
-    kit.servo[6].angle = BACK
-    kit.servo[7].angle = DOWN
+    kit.servo[4].angle = FWD
+    kit.servo[5].angle = BACK
+    kit.servo[6].angle = FWD-10
+    kit.servo[7].angle = BACK
 
 def walking_state_4():
     # Vertical servos
@@ -77,7 +78,7 @@ def walking_state_4():
     # Horizontal servos
     kit.servo[4].angle = FWD
     kit.servo[5].angle = BACK
-    kit.servo[6].angle = FWD
+    kit.servo[6].angle = FWD-10
     kit.servo[7].angle = BACK
 
 def stand():
@@ -104,3 +105,5 @@ try:
 except KeyboardInterrupt:
     print("\nStopping and returning to stand position...")
     stand()
+
+
